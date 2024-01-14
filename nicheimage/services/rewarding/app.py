@@ -23,7 +23,7 @@ torch.backends.cudnn.benchmark = False
 torch.use_deterministic_algorithms(True)
 
 config_file = importlib.resources.path(
-    "niche_image.services.configs", "model_config.yaml"
+    "nicheimage.services.configs", "model_config.yaml"
 )
 MODEL_CONFIG = yaml.load(open(config_file), yaml.FullLoader)
 

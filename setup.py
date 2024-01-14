@@ -28,15 +28,31 @@ def read_requirements(path):
         return processed_requirements
 
 
-requirements = read_requirements("requirements.txt")
 here = path.abspath(path.dirname(__file__))
-
+# requirements = read_requirements(os.path.join(here, "requirements.txt"))
+requirements = [
+    "bittensor==6.5.0",
+    "cryptography==41.0.3",
+    "diffusers==0.25.0",
+    "ImageHash==4.3.1",
+    "loguru==0.7.0",
+    "numpy==1.26.3",
+    "Pillow==10.2.0",
+    "pydantic==1.10.13",
+    "PyYAML==6.0.1",
+    "Requests==2.31.0",
+    "setuptools==68.0.0",
+    "slowapi==0.1.8",
+    "tqdm==4.65.0",
+    "transformers==4.35.2",
+    "omegaconf==2.3.0",
+]
 with open(path.join(here, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
 # loading version from setup.py
 with codecs.open(
-    os.path.join(here, "niche_image/__init__.py"), encoding="utf-8"
+    os.path.join(here, "nicheimage/__init__.py"), encoding="utf-8"
 ) as init_file:
     version_match = re.search(
         r"^__version__ = ['\"]([^'\"]*)['\"]", init_file.read(), re.M
@@ -44,15 +60,16 @@ with codecs.open(
     version_string = version_match.group(1)
 
 setup(
-    name="niche_image",
-    version=version_string,
+    name="nicheimage",
+    version="0.0.3",
     description="NicheImage - Subnet 23 - Bittensor",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/NicheTensor/NicheImage",
     author="NicheImage dev",
-    packages=["niche_image", "niche_image.services", "niche_image.services.configs"],
-    package_data={"niche_image.services.configs": ["model_config.yaml"]},
+    packages=find_packages(include=["nicheimage", "nicheimage.*"]),
+    py_modules=["nicheimage"],
+    package_data={"nicheimage.services.configs": ["model_config.yaml"]},
     include_package_data=True,
     author_email="",
     license="MIT",

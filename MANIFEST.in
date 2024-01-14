@@ -1,1 +1,1 @@
-include niche_image/services/configs/model_config.yaml
+include nicheimage/services/configs/model_config.yaml
