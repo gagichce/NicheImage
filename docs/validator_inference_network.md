@@ -46,5 +46,5 @@ This shows how many request you got for each date.
 
 ## Technical Description of the Validator Inference Network
 
-The structure is rather simple. Clients that wants to generate images 
-![Alt text](docs/images/Structure.png)
+The structure is rather simple. Clients that wants to generate images queries our load balancer, which then queries a validator. Validators will get images in relation to how much stake they have, meaning that more stake gives more images.
+![Structure](images/Structure.png)
