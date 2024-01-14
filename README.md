@@ -15,23 +15,14 @@ Welcome to the Image Generating Subnet project. This README provides an overview
 - [Research](https://bittensor.com/whitepaper)
 
 ## Project Structure
-- `image_generation_subnet`: Contains base, feature functions, and utilities for validators and miners.
+- `niche_image_subnet`: Contains base, feature functions, and utilities for validators and miners.
 - `neurons`: Contains the validator and miner loop.
-- `dependency_modules`: Includes servers for `prompt_generation`, `rewarding`, and `miner_endpoint`.
+- `services`: Includes servers for `prompt_generation`, `rewarding`, and `miner_endpoint`.
 
 ## Installation
-1. Clone the repository.
+Install as a package using pip.
 ```bash
-git clone https://github.com/NicheTensor/NicheImage.git
-```
-2. Install the dependencies.
-```bash
-cd NicheImage
-pip install -r requirements.txt
-```
-3. Install the project.
-```bash
-pip install -e .
+pip install nicheimage
 ```
 
 ## Example Usage
@@ -42,24 +33,24 @@ Before running the following commands, make sure to replace the placeholder argu
 
 First you need to start an image generation API on a gpu server that your miners can use. A RTX 3090 GPU is enough for several miners.
 ```bash
-python dependency_modules/miner_endpoint/app.py --port <port> --model_name <model_name>
+python -m nicheimage.services.miner_endpoint.app --port <port> --model_name <model_name>
 ```
 
 You can also run with pm2. For example like this for SDXLTurbo:
 ```bash
-pm2 start python --name "image_generation_endpoint_SDXLTurbo" -- -m dependency_modules.miner_endpoint.app --port 10006 --model_name SDXLTurbo
+pm2 start python --name "image_generation_endpoint_SDXLTurbo" -- -m nicheimage.services.miner_endpoint.app --port 10006 --model_name SDXLTurbo
 ```
 
 Or, you can start the RealisticVision model like this:
 ```bash
-pm2 start python --name "image_generation_endpoint_RealisticVision" -- -m dependency_modules.miner_endpoint.app --port 10006 --model_name RealisticVision
+pm2 start python --name "image_generation_endpoint_RealisticVision" -- -m nicheimage.services.miner_endpoint.app --port 10006 --model_name RealisticVision
 ```
 
 Then you can run several miners using the image generation API:
 ```bash
 pm2 start python --name "miner" \
 -- \
--m neurons.miner.miner \
+-m nicheimage.neurons.miner.miner \
 --netuid <netuid> \
 --wallet.name <wallet_name> --wallet.hotkey <wallet_hotkey> \
 --subtensor.network <network> \
@@ -70,7 +61,7 @@ pm2 start python --name "miner" \
 
 You can also start with pm2, here is an example:
 ```bash
-pm2 start python --name "miner" -- -m neurons.miner.miner --netuid 23 --wallet.name <wallet_name> --wallet.hotkey <wallet_hotkey> --subtensor.network finney --generate_endpoint http://127.0.0.1:10006/generate --info_endpoint http://127.0.0.1:10006/info --axon.port 10010
+pm2 start python --name "miner" -- -m nicheimage.neurons.miner.miner --netuid 23 --wallet.name <wallet_name> --wallet.hotkey <wallet_hotkey> --subtensor.network finney --generate_endpoint http://127.0.0.1:10006/generate --info_endpoint http://127.0.0.1:10006/info --axon.port 10010
 ```
 
 **View logs** 
@@ -91,7 +82,7 @@ If passed, a proxy server will start that allows us to query through their valid
 
 ```bash
 pm2 start python --name "validator_nicheimage" \
--- -m neurons.validator.validator \
+-- -m nicheimage.neurons.validator.validator \
 --netuid <netuid> \
 --wallet.name <wallet_name> --wallet.hotkey <wallet_hotkey> \
 --subtensor.network <network> \
@@ -108,7 +99,7 @@ pm2 logs validator_nicheimage
 Pull the latest code from github and restart the validator every hour.
 **Notice**, the validator must be named validator_nicheimage for the auto-updates to restart the process, so do not change the name from validator_nicheimage.
 ```bash
-pm2 start auto_update.sh --name "auto-update"
+pm2 start nicheimage.auto_update --name "auto-update"
 ```
 
 # Roadmap
