@@ -84,8 +84,8 @@ Requirements: A validator only needs a cpu server to validate by using our free 
 
 However, it is possible to run your own image checking APIs if you prefer. This does require a GPU with min 20 GB of ram. You can see how to do this [here.](./dependency_modules/README.md)
 
-If validators opt in to share their request capacity they will get paid for each image they generate. Opt in is done by specifying --proxy.port
-If passed, a proxy server will start that allows us to query through their validator, and the validator will get paid weekly for the images they provide.
+
+
 
 ### Start Validator with Default Settings
 
@@ -96,7 +96,7 @@ pm2 start python --name "validator_nicheimage" \
 --wallet.name <wallet_name> --wallet.hotkey <wallet_hotkey> \
 --subtensor.network <network> \
 --axon.port <your_public_port> \
---proxy.port <other_public_port> # Optional, pass only if you want allow queries through your validator and get paid
+--proxy.port <other_public_port> # Optional, pass if you want to join the Validator Inference Network to get paid for generating images.
 ```
 
 **View logs** 
@@ -104,12 +104,20 @@ pm2 start python --name "validator_nicheimage" \
 pm2 logs validator_nicheimage
 ```
 
+### Validator Inference Network
+As a validator you can to join the Validator Inference Network by specifying --proxy.port, this allows us to query miners to generate images through your validator.
+
+[Click here for more information.](docs/validator_inference_network.md)
+
 ### Schedule update and restart validator
 Pull the latest code from github and restart the validator every hour.
 **Notice**, the validator must be named validator_nicheimage for the auto-updates to restart the process, so do not change the name from validator_nicheimage.
 ```bash
 pm2 start auto_update.sh --name "auto-update"
 ```
+
+## The Validator Inference Network
+
 
 # Roadmap
 

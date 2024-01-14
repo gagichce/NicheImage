@@ -13,6 +13,8 @@ While these number are indicative of future demand, current demand for the netwo
 
 Payments to your validator are done on a weekly basis and can be made in Tao or USDT. You can choose to have it be transfered to your validator or to another address.
 
+NicheTensor facilitates the transactions, but we do not currently take any cut, meaning that everything we get in payment from clients, goes directly to the validators participating in the Validator Inference Network.
+
 ## How to Join The Validator Inference Network
 It is very easy to join the Validator Inference Network, just specify --proxy.port when starting the validator.
 
@@ -42,5 +44,7 @@ The logs should look something like this:
 
 This shows how many request you got for each date.
 
-## Structure
-![Alt text](NicheImage/docs/images/Structure.png)
+## Technical Description of the Validator Inference Network
+
+The structure is rather simple. Clients that wants to generate images 
+![Alt text](docs/images/Structure.png)
