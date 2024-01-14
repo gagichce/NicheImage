@@ -84,9 +84,6 @@ Requirements: A validator only needs a cpu server to validate by using our free 
 
 However, it is possible to run your own image checking APIs if you prefer. This does require a GPU with min 20 GB of ram. You can see how to do this [here.](./dependency_modules/README.md)
 
-
-
-
 ### Start Validator with Default Settings
 
 ```bash
@@ -104,19 +101,19 @@ pm2 start python --name "validator_nicheimage" \
 pm2 logs validator_nicheimage
 ```
 
-### Validator Inference Network
-As a validator you can to join the Validator Inference Network by specifying --proxy.port, this allows us to query miners to generate images through your validator.
-
-[Click here for more information.](docs/validator_inference_network.md)
-
 ### Schedule update and restart validator
 Pull the latest code from github and restart the validator every hour.
+
 **Notice**, the validator must be named validator_nicheimage for the auto-updates to restart the process, so do not change the name from validator_nicheimage.
 ```bash
 pm2 start auto_update.sh --name "auto-update"
 ```
 
-## The Validator Inference Network
+### Validator Inference Network
+As a validator you can to join the Validator Inference Network by specifying --proxy.port, this allows us to query miners to generate images through your validator.
+
+[Click here for more information.](docs/validator_inference_network.md)
+
 
 
 # Roadmap
