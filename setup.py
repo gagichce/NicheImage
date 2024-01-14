@@ -61,7 +61,7 @@ with codecs.open(
 
 setup(
     name="nicheimage",
-    version="0.0.3",
+    version="0.0.5",
     description="NicheImage - Subnet 23 - Bittensor",
     long_description=long_description,
     long_description_content_type="text/markdown",
