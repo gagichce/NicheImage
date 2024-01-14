@@ -3,6 +3,26 @@ import subprocess
 from datetime import datetime, timedelta
 import argparse
 
+
+def is_package_outdated(package_name):
+    try:
+        # Run pip command and capture the output
+        result = subprocess.run(
+            ["pip", "list", "--outdated"], capture_output=True, text=True
+        )
+        if result.returncode != 0:
+            # Handle error if pip command fails
+            print("Error in executing pip command")
+            return False
+
+        # Check if the package is in the list of outdated packages
+        outdated_packages = result.stdout
+        return package_name in outdated_packages
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return False
+
+
 parser = argparse.ArgumentParser(
     description="Auto update script for the Niche Image validator."
 )
@@ -22,18 +42,12 @@ while True:
     print(f"{datetime.now()}: Script started")
 
     # Save the current HEAD hash
-    current_head = subprocess.getoutput("git rev-parse HEAD")
-
-    # Pull the latest changes from the repository
-    subprocess.run(["git", "stash"])
-    subprocess.run(["git", "pull", "-f"])
-
-    # Get the new HEAD hash
-    new_head = subprocess.getoutput("git rev-parse HEAD")
+    is_outdated = is_package_outdated("nicheimage")
 
     # Check if the new HEAD is different from the current HEAD
-    if current_head != new_head:
+    if is_outdated:
         # The HEAD has changed, meaning there's a new version
+        subprocess.run(["pip", "install", "--upgrade", "nicheimage"])
         print(f"{datetime.now()}: New version detected, restarting the validator.")
         subprocess.run(["pm2", "restart", args.process_name])
     else:
