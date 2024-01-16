@@ -82,17 +82,30 @@ pip install -r requirements.txt
 ```bash
 pip install -e .
 ```
-
-There are several models available to run, you start SDXLTurbo like this:
+There are several models available to run:
+- SDXLTurbo
 ```bash
 pm2 start python --name "image_generation_endpoint_SDXLTurbo" -- -m dependency_modules.miner_endpoint.app --port 10006 --model_name SDXLTurbo
 ```
 
-Or, you can start the RealisticVision model like this:
+- RealisticVision
 ```bash
 pm2 start python --name "image_generation_endpoint_RealisticVision" -- -m dependency_modules.miner_endpoint.app --port 10006 --model_name RealisticVision
 ```
+- AnimeV3
+```
+pm2 start python --name "image_generation_endpoint_AnimeV3" -- -m dependency_modules.miner_endpoint.app --port 10006 --model_name RealisticVision
+```
+You also can follow the usage here:
+```
+python dependency_modules/miner_endpoint/app.py -h
+usage: app.py [-h] [--port PORT] [--model_name {RealisticVision,SDXLTurbo,AnimeV3}]
 
+options:
+  -h, --help            show this help message and exit
+  --port PORT
+  --model_name {RealisticVision,SDXLTurbo,AnimeV3}
+```
 Notice that you can change the port 10006 to another value if that port is not open and you want miners to run on another server.
 
 Then you can start miners like this:
